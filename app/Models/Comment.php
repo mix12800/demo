@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
 
-#[Fillable(['name', 'date', 'room_id', 'pay', 'user_id'])]
-class Order extends Model
+#[Fillable(['comment', 'order_id', 'user_id'])]
+class Comment extends Model
 {
     //
 }

@@ -80,7 +80,10 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        $room->delete();
-        return response()->json(['message' => 'ok']);
+        if (Auth::user()->role == 'admin') {
+            $room->delete();
+            return response()->json(['message' => 'ok']);
+        }
+        return response()->json(["errors" => ["message" => "Доступ запрещен"]], 403);
     }
 }

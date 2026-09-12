@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
@@ -12,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('registration', [UserController::class, 'registration']);
 Route::post('auth', [UserController::class, 'auth']);
-Route::get('room', [RoomController::class, 'index']);
+Route::get('order', [OrderController::class, "index"]);
+Route::post('comments', [CommentController::class, "index"]);
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('room', RoomController::class)->except(['index']);
-    Route::resource('order', OrderController::class);
+    Route::resource('room', RoomController::class);
+    Route::resource('order', OrderController::class)->except('index');
+    Route::resource('comment', CommentController::class)->except('index');
 });

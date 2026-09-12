@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->date('date');
-            $table->foreignId('room_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->text('comment');
+            $table->foreignId('order_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->enum('pay', ['cash', 'translation']);
-            $table->enum('status', ['new', 'active', 'completed'])->default('new');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('comments');
     }
 };
