@@ -31,6 +31,7 @@
                     v-if="user.role == 'admin'"
                     href="Panel-orders.html"
                     class="link"
+                    @click.prevent="changePage('PanelOrdersPage')"
                     >Панель</a
                 >
             </template>

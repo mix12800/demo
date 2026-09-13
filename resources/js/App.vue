@@ -8,6 +8,7 @@
     />
 
     <IndexPage v-if="page == 'IndexPage'" />
+
     <AuthPage
         :changePage="changePage"
         :server="server"
@@ -22,12 +23,18 @@
     />
 
     <OrderPage v-if="page == 'OrderPage'" :server="server" />
+
+    <PanelOrdersPage v-if="page == 'PanelOrdersPage'" :changePage="changePage" />
+
+    <PanelOffice v-if="page == 'PanelOffice'" :changePage="changePage" :server="server"/>
 </template>
 <script>
 import HeaderComponent from './components/HeaderComponent.vue';
 import AuthPage from './Pages/AuthPage.vue';
 import IndexPage from './Pages/IndexPage.vue';
 import OrderPage from './Pages/OrderPage.vue';
+import PanelOffice from './Pages/PanelOffice.vue';
+import PanelOrdersPage from './Pages/PanelOrdersPage.vue';
 import RegistrationPage from './Pages/RegistrationPage.vue';
 
 export default {
@@ -36,7 +43,8 @@ export default {
     data() {
         return {
             isAuthUser: false,
-            page: localStorage.getItem('page') || 'IndexPage',
+            // page: localStorage.getItem('page') || 'IndexPage',
+            page:  'PanelOffice',
             APIserver: 'http://127.0.0.1:8000/api/',
             user: {},
         };
@@ -109,6 +117,8 @@ export default {
         RegistrationPage,
         HeaderComponent,
         OrderPage,
+        PanelOrdersPage,
+        PanelOffice,
     },
 };
 </script>

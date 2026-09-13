@@ -496,4 +496,24 @@ td {
 .btn-danger {
   background-color: #f00;
   color: #fff;
+  margin: 5px;
+}
+
+.modal-fon {
+  background-color: #00000080;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 10px;
+  
 }
