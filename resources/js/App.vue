@@ -1,15 +1,33 @@
 <template>
-    <IndexPage :ChangePage="ChangePage" v-if="page == 'IndexPage'" />
-    <AuthPage :ChangePage="ChangePage" v-if="page == 'AuthPage'" />
-    <RegistrationPage
-        :ChangePage="ChangePage"
+    <HeaderComponent
+        :changePage="changePage"
+        :isAuthUser="isAuthUser"
+        :logout="logout"
+        :page="page"
+        :user="user"
+    />
+
+    <IndexPage v-if="page == 'IndexPage'" />
+    <AuthPage
+        :changePage="changePage"
         :server="server"
+        :loginUser="loginUser"
+        v-if="page == 'AuthPage'"
+    />
+    <RegistrationPage
+        :changePage="changePage"
+        :server="server"
+        :loginUser="loginUser"
         v-if="page == 'RegistrationPage'"
     />
+
+    <OrderPage v-if="page == 'OrderPage'" :server="server" />
 </template>
 <script>
+import HeaderComponent from './components/HeaderComponent.vue';
 import AuthPage from './Pages/AuthPage.vue';
 import IndexPage from './Pages/IndexPage.vue';
+import OrderPage from './Pages/OrderPage.vue';
 import RegistrationPage from './Pages/RegistrationPage.vue';
 
 export default {
@@ -17,19 +35,55 @@ export default {
 
     data() {
         return {
-            page: 'IndexPage',
+            isAuthUser: false,
+            page: localStorage.getItem('page') || 'IndexPage',
             APIserver: 'http://127.0.0.1:8000/api/',
+            user: {},
         };
     },
 
+    mounted() {
+        if (localStorage.getItem('token')) {
+            this.getUser();
+            this.isAuthUser = true;
+        }
+    },
+
     methods: {
-        ChangePage(page) {
+        changePage(page) {
             this.page = page;
+            localStorage.setItem('page', page);
+        },
+
+        getUser() {
+            this.server('user')
+                .then((result) => {
+                    this.user = result.user;
+                })
+                .catch((error) => console.log('error', error));
+        },
+
+        logout() {
+            localStorage.removeItem('token');
+            this.user = {};
+            this.changePage('IndexPage');
+            this.isAuthUser = false;
+        },
+
+        loginUser(token) {
+            localStorage.setItem('token', token);
+            this.changePage('IndexPage');
+            this.getUser();
+            this.isAuthUser = true;
         },
 
         async server(route, method = 'GET', formdata = null) {
             let myHeaders = new Headers();
             myHeaders.append('Accept', 'application/json');
+            myHeaders.append(
+                'Authorization',
+                'Bearer ' + localStorage.getItem('token'),
+            );
 
             let requestOptions = {
                 method: method,
@@ -53,6 +107,8 @@ export default {
         IndexPage,
         AuthPage,
         RegistrationPage,
+        HeaderComponent,
+        OrderPage,
     },
 };
 </script>

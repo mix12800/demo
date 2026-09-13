@@ -1,5 +1,5 @@
 <template>
-    <HeaderComponent :ChangePage="ChangePage" />
+   
 
     <div class="form">
         <h1>Регистрация</h1>
@@ -9,10 +9,13 @@
                 type="text"
                 id="fio"
                 v-model="fio"
-                class="input-form error-input"
+                class="input-form"
+                :class="{ 'error-input': errors.fio }"
                 placeholder="Фамилия имя отчество"
             />
-            <p class="error-form">Это поле обязательно</p>
+            <p v-if="errors.fio" class="error-form">
+                {{ errors.fio.join('. ') }}
+            </p>
         </div>
         <div class="mb-3">
             <label for="email" class="label-form"
@@ -23,8 +26,12 @@
                 id="email"
                 v-model="email"
                 class="input-form"
+                :class="{ 'error-input': errors.email }"
                 placeholder="ivan@email.com"
             />
+            <p v-if="errors.email" class="error-form">
+                {{ errors.email.join('. ') }}
+            </p>
         </div>
         <div class="mb-3">
             <label for="phone" class="label-form">Номер телефона</label>
@@ -33,8 +40,12 @@
                 id="phone"
                 v-model="phone"
                 class="input-form"
+                :class="{ 'error-input': errors.phone }"
                 placeholder="8(XXX)XXX-XX-XX"
             />
+            <p v-if="errors.phone" class="error-form">
+                {{ errors.phone.join('. ') }}
+            </p>
         </div>
         <div class="mb-3">
             <label for="login" class="label-form">Логин</label>
@@ -42,9 +53,13 @@
                 type="text"
                 id="login"
                 v-model="login"
+                :class="{ 'error-input': errors.login }"
                 class="input-form"
                 placeholder="Логин"
             />
+            <p v-if="errors.login" class="error-form">
+                {{ errors.login.join('. ') }}
+            </p>
         </div>
         <div class="mb-3">
             <label for="password" class="label-form">Пароль</label>
@@ -53,8 +68,12 @@
                 id="password"
                 v-model="password"
                 class="input-form"
+                :class="{ 'error-input': errors.password }"
                 placeholder="Пароль"
             />
+            <p v-if="errors.password" class="error-form">
+                {{ errors.password.join('. ') }}
+            </p>
         </div>
         <template v-if="loading">
             <button class="btn btn-form w-100">
@@ -70,18 +89,18 @@
 
         <p class="link">
             Уже были зарегистрированы?
-            <a href="authorization.html" @click.prevent="ChangePage('AuthPage')"
+            <a href="authorization.html" @click.prevent="changePage('AuthPage')"
                 >Авторизация</a
             >
         </p>
     </div>
 </template>
 <script>
-import HeaderComponent from '@/components/HeaderComponent.vue';
+
 
 export default {
     name: 'RegistrationPage',
-    props: ['ChangePage', 'server'],
+    props: ['changePage', 'server', 'loginUser'],
 
     data() {
         return {
@@ -91,6 +110,7 @@ export default {
             login: '',
             password: '',
             loading: false,
+            errors: {},
         };
     },
 
@@ -106,14 +126,16 @@ export default {
             this.server('registration', 'POST', formdata)
                 .then((result) => {
                     this.loading = false;
-                    console.log(result);
+                    if (result.errors) {
+                        this.errors = result.errors;
+                    } else {
+                        this.loginUser(result.token);
+                    }
                 })
                 .catch((error) => console.log('error', error));
         },
     },
 
-    components: {
-        HeaderComponent,
-    },
+    
 };
 </script>

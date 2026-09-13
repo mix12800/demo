@@ -1,6 +1,4 @@
 <template>
-    <HeaderComponent :ChangePage="ChangePage" />
-
     <div class="block-сonferences">
         <!-- Карточка -->
         <!-- <div class="cart-m mb-3">
@@ -72,14 +70,7 @@
     </div>
 </template>
 <script>
-import HeaderComponent from '@/components/HeaderComponent.vue';
-
 export default {
     name: 'IndexPage',
-    props: ['ChangePage'],
-
-    components: {
-        HeaderComponent,
-    },
 };
 </script>

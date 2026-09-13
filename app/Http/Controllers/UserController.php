@@ -6,6 +6,7 @@ use App\Http\Requests\AuthUserRequest;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -24,6 +25,11 @@ class UserController extends Controller
             return response()->json(['token' => $user->createToken("api")->plainTextToken]);
         }
         return response()->json(['errors' => ['login' => ["Ошибка входа"]]]);
+    }
+
+
+    public   function userget() {
+        return response()->json(['user'=>Auth::user()]);
     }
 
     /**

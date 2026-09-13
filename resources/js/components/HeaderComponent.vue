@@ -1,19 +1,51 @@
 <template>
     <header>
-        <h2><a href="index.html" class="name" @click.prevent="ChangePage('IndexPage')">Конференции.РФ</a></h2>
+        <h2>
+            <a
+                href="index.html"
+                class="name"
+                @click.prevent="changePage('IndexPage')"
+                >Конференции.РФ</a
+            >
+        </h2>
         <div class="block-link">
-            <!-- <a href="index.html" class="link link-active">Конференции</a>
-            <a href="Conferences.html" class="link">Мои заявки</a>
-            <a href="Order.html" class="link">Сформировать заявку</a>
-            <a href="Panel-orders.html" class="link">Панель</a> -->
+            <template v-if="isAuthUser">
+                <a
+                    href="index.html"
+                    class="link"
+                    @click.prevent="changePage('IndexPage')"
+                    :class="{ 'link-active': page == 'IndexPage' }"
+                    >Конференции</a
+                >
+                <template v-if="user.role == 'user'">
+                    <a href="Conferences.html" class="link">Мои заявки</a>
+                    <a
+                        href="Order.html"
+                        class="link"
+                        @click.prevent="changePage('OrderPage')"
+                        :class="{ 'link-active': page == 'OrderPage' }"
+                        >Сформировать заявку</a
+                    >
+                </template>
+                <a
+                    v-if="user.role == 'admin'"
+                    href="Panel-orders.html"
+                    class="link"
+                    >Панель</a
+                >
+            </template>
         </div>
-        <!-- <button class="btn btn-logout">Выход</button> -->
-        <button class="btn btn-login" @click="ChangePage('AuthPage')">Войти</button>
+        <button v-if="isAuthUser" class="btn btn-logout" @click="logout()">
+            Выход
+        </button>
+        <button v-else class="btn btn-login" @click="changePage('AuthPage')">
+            Войти
+        </button>
     </header>
 </template>
 <script>
 export default {
     name: 'HeaderComponent',
-    props: ['ChangePage'],
+    props: ['changePage', 'isAuthUser', 'logout', 'page', 'user'],
 };
 </script>

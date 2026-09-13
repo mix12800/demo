@@ -223,6 +223,7 @@ td {
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+  margin: 10px;
 }
 
 .sheck-form:checked + .sheck-label-form {
