@@ -223,7 +223,7 @@ td {
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
-  margin: 10px;
+  margin-right: 10px;
 }
 
 .sheck-form:checked + .sheck-label-form {
@@ -509,11 +509,19 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
+  display: none;
 }
 
 .modal {
   background-color: #f8f9fa;
   padding: 10px;
   border-radius: 10px;
-  
+}
+
+.modal-open {
+  display: flex;
+}
+
+.mt-2 {
+  margin-top: 20px;
 }

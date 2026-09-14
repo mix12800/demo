@@ -9,5 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 #[Fillable(['name', 'date', 'room_id', 'pay', 'user_id'])]
 class Order extends Model
 {
-    //
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }

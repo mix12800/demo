@@ -9,12 +9,18 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+
+    public function getmyorder()
+    {
+        return response()->json(['orders' => Order::with('room')->where('user_id', Auth::id())->get()]);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return response()->json(['orders'=>Order::paginate(3)]);
+        return response()->json(['orders' => Order::paginate(3)]);
     }
 
     /**

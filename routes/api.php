@@ -20,4 +20,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('order', OrderController::class)->except('index');
     Route::resource('comment', CommentController::class)->except('index');
     Route::get('user', [UserController::class, "userget"]);
+    Route::get('myorder', [OrderController::class, "getmyorder"]);
 });

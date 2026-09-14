@@ -22,16 +22,30 @@
         v-if="page == 'RegistrationPage'"
     />
 
-    <OrderPage v-if="page == 'OrderPage'" :server="server" />
+    <OrderPage
+        v-if="page == 'OrderPage'"
+        :server="server"
+        :changePage="changePage"
+    />
 
-    <PanelOrdersPage v-if="page == 'PanelOrdersPage'" :changePage="changePage" />
+    <PanelOrdersPage
+        v-if="page == 'PanelOrdersPage'"
+        :changePage="changePage"
+    />
 
-    <PanelOffice v-if="page == 'PanelOffice'" :changePage="changePage" :server="server"/>
+    <PanelOffice
+        v-if="page == 'PanelOffice'"
+        :changePage="changePage"
+        :server="server"
+    />
+
+    <MyConferencesPage v-if="page == 'MyConferencesPage'" :server="server" />
 </template>
 <script>
 import HeaderComponent from './components/HeaderComponent.vue';
 import AuthPage from './Pages/AuthPage.vue';
 import IndexPage from './Pages/IndexPage.vue';
+import MyConferencesPage from './Pages/MyConferencesPage.vue';
 import OrderPage from './Pages/OrderPage.vue';
 import PanelOffice from './Pages/PanelOffice.vue';
 import PanelOrdersPage from './Pages/PanelOrdersPage.vue';
@@ -43,8 +57,7 @@ export default {
     data() {
         return {
             isAuthUser: false,
-            // page: localStorage.getItem('page') || 'IndexPage',
-            page:  'PanelOffice',
+            page: localStorage.getItem('page') || 'IndexPage',
             APIserver: 'http://127.0.0.1:8000/api/',
             user: {},
         };
@@ -119,6 +132,7 @@ export default {
         OrderPage,
         PanelOrdersPage,
         PanelOffice,
+        MyConferencesPage,
     },
 };
 </script>

@@ -18,7 +18,13 @@
                     >Конференции</a
                 >
                 <template v-if="user.role == 'user'">
-                    <a href="Conferences.html" class="link">Мои заявки</a>
+                    <a
+                        href="Conferences.html"
+                        @click.prevent="changePage('MyConferencesPage')"
+                        class="link"
+                        :class="{ 'link-active': page == 'MyConferencesPage' }"
+                        >Мои заявки</a
+                    >
                     <a
                         href="Order.html"
                         class="link"
@@ -31,6 +37,10 @@
                     v-if="user.role == 'admin'"
                     href="Panel-orders.html"
                     class="link"
+                    :class="{
+                        'link-active':
+                            page == 'PanelOrdersPage' || page == 'PanelOffice',
+                    }"
                     @click.prevent="changePage('PanelOrdersPage')"
                     >Панель</a
                 >
