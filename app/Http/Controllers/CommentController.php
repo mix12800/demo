@@ -15,7 +15,7 @@ class CommentController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(['comments' => Comment::where('order_id', $request->order_id)->get()]);
+        return response()->json(['comments' => Comment::with('user')->where('order_id', $request->order_id)->orderBy('created_at', 'desc')->get()]);
     }
 
     /**

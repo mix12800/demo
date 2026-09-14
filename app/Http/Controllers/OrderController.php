@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    public function getorder() {
+        return response()->json(['orders' => Order::with('room')->get()]);
+    }
 
     public function getmyorder()
     {
@@ -20,7 +23,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return response()->json(['orders' => Order::paginate(3)]);
+        return response()->json(['orders' => Order::with('room')->where('status', '!=', 'new')->paginate(3)]);
     }
 
     /**
@@ -63,6 +66,7 @@ class OrderController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $order->status = $request->status;
+            $order->save();
             return response()->json(['order' => $order]);
         }
         return response()->json(["errors" => ["message" => "Доступ запрещен"]], 403);

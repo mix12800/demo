@@ -7,7 +7,11 @@
         :user="user"
     />
 
-    <IndexPage v-if="page == 'IndexPage'" />
+    <IndexPage
+        v-if="page == 'IndexPage'"
+        :server="server"
+        :isAuthUser="isAuthUser"
+    />
 
     <AuthPage
         :changePage="changePage"
@@ -31,6 +35,7 @@
     <PanelOrdersPage
         v-if="page == 'PanelOrdersPage'"
         :changePage="changePage"
+        :server="server"
     />
 
     <PanelOffice
@@ -118,6 +123,9 @@ export default {
 
             return await fetch(this.APIserver + route, requestOptions).then(
                 (response) => {
+                    if (response.status == 401) {
+                        this.logout();
+                    }
                     return response.json();
                 },
             );

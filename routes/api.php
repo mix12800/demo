@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-
 Route::post('registration', [UserController::class, 'registration']);
 Route::post('auth', [UserController::class, 'auth']);
 Route::get('order', [OrderController::class, "index"]);
+Route::get('getorder', [OrderController::class, "getorder"]);
 Route::post('comments', [CommentController::class, "index"]);
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('room', RoomController::class);

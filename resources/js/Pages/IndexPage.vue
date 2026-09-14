@@ -1,76 +1,62 @@
 <template>
     <div class="block-сonferences">
         <!-- Карточка -->
-        <!-- <div class="cart-m mb-3">
-            <div class="cart-conferences">
-                <img src="media/e0aa2a26192b2d5bd69.jpg" alt="" />
-                <div class="cart-body">
-                    <div class="cart-content w-100">
-                        <div class="cart-text">
-                            <p>Конференция</p>
-                            <p>Дата проведения 01.01.2027</p>
-                        </div>
-                        <button class="btn btn-cart">Коментрировать</button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="coment-block">
-                <div class="mb-2">
-                    <label for="coment" class="label-form"
-                        >Отзыв для: Конференция</label
-                    >
-                    <textarea
-                        name="coment"
-                        class="input-form error-input"
-                        placeholder="Оставите отзыв..."
-                    ></textarea>
-                    <p class="error-form">Это поле обязательно</p>
-                </div>
-                <button class="btn btn-form w-100">Отправить</button>
-
-                <div class="coments">
-                    <div class="user-coment mt-2">
-                        <div class="user-coment-header">
-                            <p>Ивнов Ивани Иванович</p>
-                        </div>
-                        <p>
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто
-                        </p>
-                    </div>
-
-                    <div class="user-coment mt-2">
-                        <div class="user-coment-header">
-                            <p>Ивнов Ивани Иванович</p>
-                        </div>
-                        <p>
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто Круто Круто Круто Круто Круто Круто
-                            Круто Круто
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+        <template v-for="order in orders.data">
+            <CartComponent
+                :order="order"
+                :server="server"
+                :isAuthUser="isAuthUser"
+            />
+        </template>
 
         <div class="block-btn">
-            <button class="btn btn-page" disabled>Назад</button>
-            <button class="btn btn-page">Далее</button>
+            <button
+                class="btn btn-page"
+                :disabled="orders.current_page <= 1"
+                @click="getOregs(orders.current_page - 1)"
+            >
+                Назад
+            </button>
+            <button
+                class="btn btn-page"
+                :disabled="orders.current_page >= orders.last_page"
+                @click="getOregs(orders.current_page + 1)"
+            >
+                Далее
+            </button>
         </div>
     </div>
 </template>
 <script>
+import CartComponent from '@/components/CartComponent.vue';
+
 export default {
     name: 'IndexPage',
+    props: ['server', 'isAuthUser'],
+
+    data() {
+        return {
+            orders: [],
+        };
+    },
+
+    mounted() {
+        this.getOregs();
+    },
+
+    methods: {
+        getOregs(page = 1) {
+            this.server('order?page=' + page, 'GET')
+                .then((result) => {
+                    this.orders = result.orders;
+                })
+                .catch((error) => console.log('error', error));
+        },
+    },
+
+    components: {
+        CartComponent,
+    },
 };
 </script>

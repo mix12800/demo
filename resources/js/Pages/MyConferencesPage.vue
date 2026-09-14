@@ -14,7 +14,7 @@
                 <td>{{ order.room.name }}</td>
                 <td>{{ pay_method[order.pay] }}</td>
                 <td>{{ order.name }}</td>
-                <td>{{ order.date }}</td>
+                <td>{{ new Date(order.date).toLocaleDateString('ru-RU') }}</td>
                 <td>
                     <span class="status" :class="order.status">{{
                         status_name[order.status]
