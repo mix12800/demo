@@ -7,12 +7,6 @@
         :user="user"
     />
 
-    <IndexPage
-        v-if="page == 'IndexPage'"
-        :server="server"
-        :isAuthUser="isAuthUser"
-    />
-
     <AuthPage
         :changePage="changePage"
         :server="server"
@@ -49,7 +43,6 @@
 <script>
 import HeaderComponent from './components/HeaderComponent.vue';
 import AuthPage from './Pages/AuthPage.vue';
-import IndexPage from './Pages/IndexPage.vue';
 import MyConferencesPage from './Pages/MyConferencesPage.vue';
 import OrderPage from './Pages/OrderPage.vue';
 import PanelOffice from './Pages/PanelOffice.vue';
@@ -62,7 +55,7 @@ export default {
     data() {
         return {
             isAuthUser: false,
-            page: localStorage.getItem('page') || 'IndexPage',
+            page: localStorage.getItem('page') || 'AuthPage',
             APIserver: 'http://127.0.0.1:8000/api/',
             user: {},
         };
@@ -85,6 +78,11 @@ export default {
             this.server('user')
                 .then((result) => {
                     this.user = result.user;
+                    if (this.user.role == 'user') {
+                        this.changePage('MyConferencesPage');
+                    } else {
+                        this.changePage('PanelOrdersPage');
+                    }
                 })
                 .catch((error) => console.log('error', error));
         },
@@ -92,13 +90,12 @@ export default {
         logout() {
             localStorage.removeItem('token');
             this.user = {};
-            this.changePage('IndexPage');
+            this.changePage('AuthPage');
             this.isAuthUser = false;
         },
 
         loginUser(token) {
             localStorage.setItem('token', token);
-            this.changePage('IndexPage');
             this.getUser();
             this.isAuthUser = true;
         },
@@ -133,7 +130,6 @@ export default {
     },
 
     components: {
-        IndexPage,
         AuthPage,
         RegistrationPage,
         HeaderComponent,

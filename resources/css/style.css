@@ -96,7 +96,7 @@ body {
 }
 
 .block-Conferences {
-  width: 50%;
+  width: 80%;
   box-shadow: 0 0 16px #ccc;
   margin: 20px auto;
   padding: 10px;
@@ -524,4 +524,9 @@ td {
 
 .mt-2 {
   margin-top: 20px;
+}
+
+.textwar {
+  width: 200px;
+  text-wrap: balance;
 }

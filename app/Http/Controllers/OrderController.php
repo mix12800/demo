@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function getorder() {
-        return response()->json(['orders' => Order::with('room')->get()]);
-    }
+    // public function getorder()
+    // {
+    //     return response()->json(['orders' => Order::with('room', 'comment')->get()]);
+    // }
 
     public function getmyorder()
     {
-        return response()->json(['orders' => Order::with('room')->where('user_id', Auth::id())->get()]);
+        return response()->json(['orders' => Order::with('room', 'comment')->orderBy('created_at', 'desc')->where('user_id', Auth::id())->get()]);
     }
 
     /**
@@ -23,7 +24,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return response()->json(['orders' => Order::with('room')->where('status', '!=', 'new')->paginate(3)]);
+        return response()->json(['orders' => Order::with('room', 'comment')->get()]);
+        // return response()->json(['orders' => Order::with('room')->where('status', '!=', 'new')->paginate(3)]);
     }
 
     /**
@@ -48,7 +50,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return response()->json(['order' => $order]);
     }
 
     /**

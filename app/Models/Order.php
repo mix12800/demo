@@ -13,4 +13,9 @@ class Order extends Model
     {
         return $this->belongsTo(Room::class);
     }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'order_id');
+    }
 }

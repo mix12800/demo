@@ -4,6 +4,9 @@
         <td>{{ pay_method[order.pay] }}</td>
         <td>{{ order.name }}</td>
         <td>{{ new Date(order.date).toLocaleDateString('ru-RU') }}</td>
+        <td class="textwar">
+            {{ order.comment[0] ? order.comment[0].comment : '-----' }}
+        </td>
         <td>
             <select class="select-status" v-model="order.status">
                 <option value="new" :selected="order.status == 'new'">

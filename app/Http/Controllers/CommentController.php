@@ -15,7 +15,7 @@ class CommentController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(['comments' => Comment::with('user')->where('order_id', $request->order_id)->orderBy('created_at', 'desc')->get()]);
+        // return response()->json(['comments' => Comment::with('user')->where('order_id', $request->order_id)->orderBy('created_at', 'desc')->get()]);
     }
 
     /**
@@ -31,6 +31,7 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
+
         $comment = Comment::create($request->all() + ["user_id" => Auth::id()]);
         return response()->json(['comment' => $comment]);
     }
@@ -40,7 +41,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+
     }
 
     /**
@@ -48,7 +49,7 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        return response()->json(['comment' => $comment]);
     }
 
     /**

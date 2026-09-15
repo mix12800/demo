@@ -18,6 +18,7 @@
                     <th>Способ оплаты</th>
                     <th>Название</th>
                     <th>Начало</th>
+                    <th>Отзыв</th>
                     <th>Статус</th>
                     <th>Действие</th>
                 </tr>
@@ -47,7 +48,7 @@ export default {
 
     methods: {
         getOregs() {
-            this.server('getorder', 'GET')
+            this.server('order', 'GET')
                 .then((result) => {
                     this.orders = result.orders;
                 })
